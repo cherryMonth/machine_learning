@@ -3,23 +3,20 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 from sqlalchemy import create_engine
 import numpy as np
-import matplotlib.pyplot as plt
 
-engine = create_engine('sqlite:///MyDB_all_2.sqlite3', echo=True)
+engine = create_engine('sqlite:///MyDB.sqlite3', echo=True)
 
 data = pd.read_sql("select * from item;", con=engine)
-data = data[(data['num'] != 0) & (data['price'] != 0) | data['level'].strip != '']
+data = data[data['hot'] > 0 & (data['num'] != 0) & (data['price'] != 0) & (data['level'] != '')]
 
-data['num'][:] = pd.Series(pd.qcut(np.array(data['num']), 5).codes)
 data["area"] = data["area"].apply(lambda x: x.replace("[", "").replace("]", ""))
 data["province"] = data["area"].apply(lambda x: x.split("·")[0])
 # data['level'] = data['level'].apply(lambda x: x.split("A")[0] if x else 0)
 data['level'] = data['level'].apply(lambda x: x if x.split("A")[0] else '3A以下景区')
 # 取特征值
-x = data[['price']]
-print(x)
+x = data[['hot']]
 # 取目标值
-y = data[['level']]
+y = data[['num']]
 
 # x['age'].fillna(x['age'].mean(), axis=0, inplace=True)
 """
@@ -84,7 +81,7 @@ y_pred = rf.predict(x_test)
 score = rf.score(x_test, y_test)
 print(score)
 # 打印报告
-# from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report
 
 """
 精确度: 表示的是预测为正的样本中有多少是真正的正样本。
@@ -92,6 +89,7 @@ print(score)
 F1值:2*精度*召回率/(精度+召回率)
 支持数: 该类在样本中出现的总次数
 """
+
 # print(len(np.where(y_test == 0)[0]))
 # print(y_test)
-# print(classification_report(y_true=y_test, y_pred=y_pred))
+print(classification_report(y_true=y_test, y_pred=y_pred))
