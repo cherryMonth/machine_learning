@@ -4,19 +4,6 @@ import pandas as pd
 from sqlalchemy import create_engine
 import numpy as np
 
-engine = create_engine('sqlite:///MyDB.sqlite3', echo=True)
-
-data = pd.read_sql("select * from item;", con=engine)
-data = data[data['hot'] > 0 & (data['num'] != 0) & (data['price'] != 0) & (data['level'] != '')]
-
-data["area"] = data["area"].apply(lambda x: x.replace("[", "").replace("]", ""))
-data["province"] = data["area"].apply(lambda x: x.split("·")[0])
-# data['level'] = data['level'].apply(lambda x: x.split("A")[0] if x else 0)
-data['level'] = data['level'].apply(lambda x: x if x.split("A")[0] else '3A以下景区')
-# 取特征值
-x = data[['hot']]
-# 取目标值
-y = data[['num']]
 
 # x['age'].fillna(x['age'].mean(), axis=0, inplace=True)
 """
