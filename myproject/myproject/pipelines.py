@@ -10,6 +10,7 @@ from sqlalchemy import create_engine, Table, MetaData, Column, Integer, String, 
 
 # 导入会话构建对象
 from sqlalchemy.orm import sessionmaker
+import pandas as pd
 
 
 class HotAddressPipeline(object):
@@ -36,6 +37,8 @@ class HotAddressPipeline(object):
         经常用于做一些资源回收工作，如关闭和数据库的连接
         :return:
         '''
+        data = pd.read_sql("select * from item;", con=self.engine)
+        data.to_csv('hot.csv', index=False)
         self.session.close()
 
     def open_spider(self, spider):
