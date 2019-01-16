@@ -1,10 +1,15 @@
-Machine Learning in Action 
-==========================
+# Scrapy
 
-This is the source code to go with "Machine Learning in Action" 
-by Peter Harrington published by Manning Inc.
-The official page for this book can be found here: http://manning.com/pharrington/
+使用Scrapy爬取各大热门网站数据。
+- 去哪网
+- 豆瓣电影
+- 58同城二手车
+- 链家租房数据
 
-All the code examples were working on Python 2.6, there shouldn't be any problems with the 2.7.  NumPy will be needed for most examples.  If you have trouble running any of the examples us know on the Forum for this book: http://www.manning-sandbox.com/forum.jspa?forumID=728.  
+# 数据可视化
 
-If you want to run these on some other version of Python say--3.0 or IronPython, feel free to fork the code.   
+使用Python matplotlib进行数据可视化。
+
+# 数据分析
+
+使用Python机器学习库进行数据挖掘。
