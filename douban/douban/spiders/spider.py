@@ -39,7 +39,9 @@ class Douban(scrapy.Spider):
                 item = DoubanItem()
                 item['name'] = response.xpath('//span[@property="v:itemreviewed"]/text()').extract()[0]
                 item['douban_id'] = response.url.split("/")[-2]
-                item['star'] = '_'.join(response.xpath('//span[@class="attrs"]/span/a/text()').extract())
+                star = response.xpath('//span[@class="attrs"]/span/a/text()').extract() or response.xpath(
+                    '//span[@class="attrs"]/a/text()').extract()
+                item['star'] = '_'.join(star)
                 item['director'] = info.xpath('//span[@class="attrs"]/a')[0].xpath('./text()').extract()[0]
                 item['screenwriter'] = info.xpath('//span[@class="attrs"]/a')[1].xpath('./text()').extract()[0]
                 item['tag'] = info.xpath('//span[@property="v:genre"]/text()').extract()[0]
