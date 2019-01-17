@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <style>
+    html,
+    body,
+    #container {
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+    <title>根据规划数据绘制骑行路线</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="https://webapi.amap.com/maps?v=1.4.11&key=0a6a57948c0354f783858c07423c7fbb&plugin=AMap.Riding"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        center: [116.397559, 39.89621],
+        zoom: 14
+    });
+
+    var ridingOption = {
+        policy: 1
+    }
+
+    var riding = new AMap.Riding(ridingOption)
+
+    //根据起终点坐标规划骑行路线
+    riding.search([116.397933,39.844818],[116.440655,39.878694], function(status, result) {
+        // result即是对应的骑行路线数据信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_RidingResult
+        if (status === 'complete') {
+
+            if (result.routes && result.routes.length) {
+                drawRoute(result.routes[0])
+                log.success('绘制骑行路线完成')
+            }
+        } else {
+            log.error('骑行路线数据查询失败' + result)
+        }
+    });
+
+    function drawRoute (route) {
+        var path = parseRouteToPath(route)
+
+        var startMarker = new AMap.Marker({
+            position: path[0],
+            icon: 'https://webapi.amap.com/theme/v1.3/markers/n/start.png',
+            map: map
+        })
+
+        var endMarker = new AMap.Marker({
+            position: path[path.length - 1],
+            icon: 'https://webapi.amap.com/theme/v1.3/markers/n/end.png',
+            map: map
+        })
+
+        var routeLine = new AMap.Polyline({
+            path: path,
+            isOutline: true,
+            outlineColor: '#ffeeee',
+            borderWeight: 2,
+            strokeWeight: 5,
+            strokeColor: '#0091ff',
+            lineJoin: 'round'
+        })
+
+        routeLine.setMap(map)
+
+        // 调整视野达到最佳显示区域
+        map.setFitView([ startMarker, endMarker, routeLine ])
+    }
+
+    // 解析RidingRoute对象，构造成AMap.Polyline的path参数需要的格式
+    // RidingResult对象结构参考文档 https://lbs.amap.com/api/javascript-api/reference/route-search#m_RideRoute
+    function parseRouteToPath(route) {
+        var path = []
+
+        for (var i = 0, l = route.rides.length; i < l; i++) {
+            var step = route.rides[i]
+
+            for (var j = 0, n = step.path.length; j < n; j++) {
+              path.push(step.path[j])
+            }
+        }
+
+        return path
+    }
+
+</script>
+</body>
+</html>
