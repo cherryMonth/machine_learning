@@ -52,7 +52,7 @@ class WeBook(scrapy.Spider):
             print(item)
             yield item
 
-        for key in range(2, 50):
+        for key in range(2, 100):
             print("正在爬取{}".format(key))
             # 取前10页
             print(url_template.format(key))
