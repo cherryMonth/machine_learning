@@ -50,7 +50,7 @@ def chooseBestFeatureToSplit(data_set, label):
     :return:
     """
     baseEntropy = calc_shannon_ent(label)
-    bestInfoGain = 0.0
+    bestInfoGain = -np.Inf
     bestFeature = -1
     index = 0
 
@@ -66,6 +66,11 @@ def chooseBestFeatureToSplit(data_set, label):
     return bestFeature
 
 
+def majorityCnt(classList):
+    label_class, counts = np.unique(classList, return_counts=True)
+    return classList[np.argmax(counts)]
+
+
 def createTree(data_set, labels, feature):
     """
     创建一颗分类树
@@ -75,8 +80,12 @@ def createTree(data_set, labels, feature):
     :return:
     """
     # 如果样本的所有类别相同，这返回这个类别
-    if np.max(np.unique(labels, return_counts=True)[1]) == labels.size:
+    if data_set.shape[1] == 1 and np.max(np.unique(labels, return_counts=True)[1]) == labels.size:
         return labels[0]
+
+    # 如果数据集划分之后，特征矩阵为空，则返回标签向量中出现最多的字段
+    if data_set.shape[1] == 0:
+        return majorityCnt(labels)
 
     # 找到划分代价最小的特征
     bestFeat = chooseBestFeatureToSplit(data_set, labels)
@@ -98,7 +107,11 @@ def predict(model, x_pred, feature):
     secondDict = model[firstStr]  # 得到其子树
     index = np.where(feature == firstStr)  # 找到在该特征下的属性
     key = x_pred[index][0]  # 找到测试数据该特征下的属性值
-    valueOfFeat = secondDict[key]  # 从属性值找到符合要求的子树
+    valueOfFeat = secondDict.get(key)  # 从属性值找到符合要求的子树
+    if not valueOfFeat:
+        key_list = np.array(list(secondDict.keys()))
+        key_index = np.random.choice(key_list, 1, replace=True)
+        valueOfFeat = secondDict[key_index[0]]
     if isinstance(valueOfFeat, dict):  # 如果结果是字典代表要在子树的基础上继续查找
         classLabel = predict(valueOfFeat, x_pred, feature)
     else:  # 查询成功返回结果
@@ -106,11 +119,39 @@ def predict(model, x_pred, feature):
     return classLabel
 
 
+def generate_data(loc=0, scale=1, number=1000, n_loc=1):
+    """
+    生成数据
+    :param loc: 正太分布的均值
+    :param scale: 正太分布的标准差
+    :param number: 生成样本的数量
+    :param n_loc: 定义偏移多少个标准差的数据为负样本
+    :return:
+    """
+    _x = np.random.normal(loc=loc, scale=scale, size=(number, 5))
+    _y = np.ones(number).astype(int)
+    x_abs = np.abs(_x - loc)
+    # 把偏移大于指定偏移量的样本定义为负样本
+    neg_index = np.where(
+        (x_abs[:, 0] >= n_loc * scale) & (x_abs[:, 1] >= n_loc * scale) | (x_abs[:, 2] >= n_loc * scale) & (
+                x_abs[:, 3] >= n_loc * scale) | (x_abs[:, 4] >= n_loc * scale))
+    _y[neg_index] = -1
+    print("负例 {}".format(_y[neg_index].shape[0] / number))
+    _x = np.rint(_x).astype(int)
+    _x = np.floor_divide(_x, 2)
+    return _x, _y
+
+
 if __name__ == '__main__':
-    x = np.array([[1, 1], [1, 1], [1, 0], [0, 1], [0, 1]])
-    y = np.array([1, 1, 0, 0, 0])
-    feature_list = np.array(['no surfacing', 'flippers'])
+    from sklearn.metrics import confusion_matrix, roc_auc_score, accuracy_score
+
+    x, y = generate_data()
+    feature_list = np.array(['first', 'second', 'third', 'fourth', 'fifth'])
     dt = createTree(x, y, feature_list)
-    x_test = np.array([[1, 1], [1, 1], [1, 0], [0, 1], [0, 1]])
-    y_pred = list(map(lambda pred: predict(dt, pred, feature_list), x_test))
-    print(y_pred)
+
+    x, y = generate_data()
+    y_pred = list(map(lambda pred: predict(dt, pred, feature_list), x))
+    print(dt)
+    print(accuracy_score(y, y_pred))
+    print(confusion_matrix(y, y_pred))
+    print(roc_auc_score(y, y_pred))
