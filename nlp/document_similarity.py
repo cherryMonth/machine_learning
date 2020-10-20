@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from jieba import analyse
 import numpy
 import gensim
@@ -13,10 +15,9 @@ def keyword_extract(data):
 # 将文档的每句话进行关键词提取，并将结果保存在txt文件中
 def getKeywords(docpath):
     keyword_string_list = list()
-    with open(docpath, 'r', encoding='utf-8') as docf:
-        for data in docf:  # 以换行划分段落，一个data是一段
-            keywords_string = '/'.join(keyword_extract(data))
-            keyword_string_list.append(keywords_string)
+    for data in docpath.split("\n"):  # 以换行划分段落，一个data是一段
+        keywords_string = '/'.join(keyword_extract(data))
+        keyword_string_list.append(keywords_string)
     return keyword_string_list
 
 
@@ -44,17 +45,17 @@ def simlarityCalu(vector1, vector2):
         simlarity = 0
     return simlarity
 
-
-p1 = 'untitled.txt'
-p2 = 'untitled1.txt'
-# 获取关键词
-p1_keywords = getKeywords(p1)
-p2_keywords = getKeywords(p2)
-print(p1_keywords)
-print(p2_keywords)
-model_file = 'news_12g_baidubaike_20g_novel_90g_embedding_64.bin'
-model = gensim.models.KeyedVectors.load_word2vec_format(model_file, binary=True)
-p1_vec = word2vec(p1_keywords, model)
-p2_vec = word2vec(p2_keywords, model)
-# 计算相似度
-print(simlarityCalu(p1_vec, p2_vec))
+if __name__ == "__main__":
+    # 获取关键词
+    p1 = "123"
+    p2 = "123"
+    p1_keywords = getKeywords(p1)
+    p2_keywords = getKeywords(p2)
+    print(p1_keywords)
+    print(p2_keywords)
+    model_file = 'news_12g_baidubaike_20g_novel_90g_embedding_64.bin'
+    model = gensim.models.KeyedVectors.load_word2vec_format(model_file, binary=True)
+    p1_vec = word2vec(p1_keywords, model)
+    p2_vec = word2vec(p2_keywords, model)
+    # 计算相似度
+    print(simlarityCalu(p1_vec, p2_vec))

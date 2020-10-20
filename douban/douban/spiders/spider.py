@@ -1,6 +1,7 @@
 import scrapy
 from douban.items import DoubanItem
 import re
+import json
 
 
 class Douban(scrapy.Spider):
@@ -9,7 +10,15 @@ class Douban(scrapy.Spider):
     # 定义域名限制，只能爬取xxx域名下的数据
     allowed_domains = ['movie.douban.com']
 
-    url_templates = 'https://movie.douban.com/tag/%E7%83%82%E7%89%87?start={}'
+    cookies = {
+        'bid': 'YFvyGCpE3Ts',
+        "ll": "108296",
+        "douban-fav-remind": "1",
+        "viewed": "30167776",
+        "ap_v": "0,6.0"
+    }
+
+    url_templates = 'https://movie.douban.com/j/new_search_subjects?sort=T&range=0,10&tags=%E7%83%82%E7%89%87&start={}'
 
     page_num = 0
 
@@ -17,20 +26,21 @@ class Douban(scrapy.Spider):
     start_urls = (url_templates.format(page_num),)
 
     def parse(self, response):
-        # 调试时取消下面两行代码，并对其他代码进行注释
+        # 调试时取消注释下面两行代码，并对其他代码进行注释
         # 实际运行时相反
         # from scrapy.shell import inspect_response
         # inspect_response(response, self)
-
         if 'tag' in response.url:
-            url_list = response.xpath('//a[@class="nbg"]/@href').extract()
+            url_data = json.loads(response.body[84:-20].decode())['data']
+            print(url_data)
             self.page_num += 20
-            for url in url_list:
-                yield scrapy.Request(url, callback=self.parse)
+            for data in url_data:
+                yield scrapy.Request(data['url'], cookies=self.cookies, callback=self.parse)
             if self.page_num == 1000:
                 yield None
             else:
-                yield scrapy.Request(self.url_templates.format(self.page_num), callback=self.parse)
+                yield scrapy.Request(self.url_templates.format(self.page_num), cookies=self.cookies,
+                                     callback=self.parse)
         else:
             info = response.xpath('//div[@id="info"]')[0]
             if '集数' in info.extract() and '单集片长' in info.extract():  # 对于电视剧类型选择丢弃

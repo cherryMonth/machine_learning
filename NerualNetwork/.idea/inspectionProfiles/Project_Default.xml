@@ -1,0 +1,28 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="50" name="Python" />
+      </Languages>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="sqlalchemy.LargeBinary" />
+          <option value="sqlalchemy.create_engine" />
+          <option value="sqlalchemy.DateTime" />
+          <option value="sqlalchemy.Column" />
+          <option value="sqlalchemy.Integer" />
+          <option value="sqlalchemy.orm.scoped_session" />
+          <option value="sqlalchemy.ext.declarative.declarative_base" />
+          <option value="sqlalchemy.orm.sessionmaker" />
+          <option value="sqlalchemy.String" />
+          <option value="sqlalchemy.Text" />
+          <option value="dict.has_key" />
+          <option value="torch.nn.Embedding" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ea699550-ae31-49af-9a03-387d8d0a4ea8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../douban/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../douban/.idea/douban.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../douban/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../douban/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../douban/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../douban/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nlp/app/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nlp/app/form.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nlp/app/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nlp/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../douban/douban/selenium.py" beforeDir="false" afterPath="$PROJECT_DIR$/../douban/douban/selenium.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../douban/douban/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../douban/douban/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../douban/douban/spiders/spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/../douban/douban/spiders/spider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../douban_with_ML/douban_with_ML.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../douban_with_ML/douban_with_ML.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lianjia_with_ML/lianjia_with_ML.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../lianjia_with_ML/lianjia_with_ML.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nlp/document_similarity.py" beforeDir="false" afterPath="$PROJECT_DIR$/../nlp/document_similarity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../recommender_system/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../recommender_system/surprise_demo.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../recommender_system/templates/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../recommender_system/templates/500.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../recommender_system/webapp/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../recommender_system/webapp/main/__init__.py" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1OldawjN9w8SCEJcRZgnZE4Yqvi" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea699550-ae31-49af-9a03-387d8d0a4ea8" name="Default Changelist" comment="" />
+      <created>1564556183695</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1564556183695</updated>
+      <workItem from="1564556185984" duration="29000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

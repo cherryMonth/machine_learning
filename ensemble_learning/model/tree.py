@@ -4,7 +4,7 @@ import numpy as np
 def calc_shannon_ent(label):
     """
     计算数据集中的信息熵
-    :param label: 原始的标签
+    :param label: 原始的标签向量
     :return:
     """
 
